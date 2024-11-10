@@ -1,0 +1,1216 @@
+basePath: /api
+definitions:
+  api.Chat:
+    properties:
+      chatName:
+        type: string
+      chatType:
+        type: string
+      createdAt:
+        type: string
+      hash:
+        type: string
+      lastMasegTime:
+        type: string
+      lastMasege:
+        type: string
+      lastSnder:
+        $ref: '#/definitions/api.UserResponseInfo'
+      users:
+        items:
+          $ref: '#/definitions/api.UserResponseInfo'
+        type: array
+    type: object
+  api.ChatList:
+    properties:
+      groupChats:
+        items:
+          $ref: '#/definitions/api.Chat'
+        type: array
+      individualChats:
+        items:
+          $ref: '#/definitions/api.Chat'
+        type: array
+    type: object
+  api.Comment:
+    properties:
+      content:
+        example: This is a comment
+        type: string
+      id:
+        type: integer
+      postId:
+        example: 1
+        type: integer
+      reactionInfo:
+        $ref: '#/definitions/api.ReactionInfo'
+      user:
+        $ref: '#/definitions/api.UserResponseInfo'
+    type: object
+  api.CommentCreateRequest:
+    properties:
+      content:
+        example: This is a comment
+        type: string
+      postId:
+        example: 1
+        type: integer
+    type: object
+  api.CommentCreateResponse:
+    properties:
+      comments:
+        $ref: '#/definitions/api.Comment'
+    type: object
+  api.ErrorDetails:
+    properties:
+      code:
+        type: integer
+      details:
+        items:
+          $ref: '#/definitions/api.ValidationError'
+        type: array
+      message:
+        type: string
+    type: object
+  api.FollowRequest:
+    properties:
+      followeeId:
+        example: 1
+        type: integer
+      type:
+        description: '"follow" or "unfollow"'
+        example: follow
+        type: string
+    type: object
+  api.Group:
+    properties:
+      bannerColor:
+        example: '#000000'
+        type: string
+      chatHash:
+        type: string
+      createdAt:
+        type: string
+      creatorInfo:
+        $ref: '#/definitions/api.UserResponseInfo'
+      description:
+        example: Test description
+        type: string
+      events:
+        items:
+          $ref: '#/definitions/api.GroupEvent'
+        type: array
+      id:
+        type: integer
+      memberInfo:
+        $ref: '#/definitions/api.MemberInfo'
+      members:
+        items:
+          $ref: '#/definitions/api.GroupMember'
+        type: array
+      posts:
+        items:
+          $ref: '#/definitions/api.Post'
+        type: array
+      title:
+        example: Test title
+        type: string
+    type: object
+  api.GroupCreateRequest:
+    properties:
+      bannerColor:
+        example: '#000000'
+        type: string
+      description:
+        example: Test description
+        type: string
+      title:
+        example: Test title
+        type: string
+    type: object
+  api.GroupEvent:
+    properties:
+      creatorInfo:
+        $ref: '#/definitions/api.UserResponseInfo'
+      date:
+        example: "2021-01-01T00:00:00Z"
+        type: string
+      description:
+        example: Test description
+        type: string
+      groupId:
+        example: 1
+        type: integer
+      id:
+        type: integer
+      members:
+        items:
+          $ref: '#/definitions/api.UserResponseInfo'
+        type: array
+      title:
+        example: Test title
+        type: string
+      usersGoing:
+        type: integer
+    type: object
+  api.GroupEventCreate:
+    properties:
+      date:
+        example: "2021-01-01T00:00:00Z"
+        type: string
+      description:
+        example: Test description
+        type: string
+      groupId:
+        example: 1
+        type: integer
+      title:
+        example: Test title
+        type: string
+    type: object
+  api.GroupMember:
+    properties:
+      id:
+        type: integer
+      nickname:
+        type: string
+      role:
+        type: string
+    type: object
+  api.GroupRequest:
+    properties:
+      groupId:
+        type: integer
+      requestType:
+        description: '"inv" or "j_req"'
+        example: inv
+        type: string
+    type: object
+  api.GroupResponse:
+    properties:
+      group:
+        $ref: '#/definitions/api.Group'
+    type: object
+  api.GroupResponseInfo:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  api.LoginRequest:
+    properties:
+      email:
+        example: test@test.com
+        type: string
+      password:
+        example: '!QAZ2wsx'
+        type: string
+    type: object
+  api.MemberInfo:
+    properties:
+      roles:
+        type: string
+      totalMembers:
+        type: integer
+    type: object
+  api.Metadata:
+    properties:
+      timestamp:
+        type: string
+      version:
+        type: string
+    type: object
+  api.NotificationInfo:
+    properties:
+      id:
+        type: integer
+      idRef:
+        type: integer
+      type:
+        type: string
+    type: object
+  api.NotificationResponse:
+    properties:
+      notification_info:
+        $ref: '#/definitions/api.NotificationInfo'
+      requestId:
+        example: 1
+        type: integer
+      status:
+        description: '"accepted" or "rejected"'
+        example: accepted
+        type: string
+    type: object
+  api.Post:
+    properties:
+      commentCount:
+        type: integer
+      content:
+        example: Test content
+        type: string
+      group:
+        $ref: '#/definitions/api.GroupResponseInfo'
+      id:
+        type: integer
+      image:
+        type: string
+      privacy:
+        example: public
+        type: string
+      reactionInfo:
+        $ref: '#/definitions/api.ReactionInfo'
+      title:
+        example: Test title
+        type: string
+      user:
+        $ref: '#/definitions/api.UserResponseInfo'
+    type: object
+  api.PostCreateRequest:
+    properties:
+      content:
+        example: Test content
+        type: string
+      group:
+        $ref: '#/definitions/api.GroupResponseInfo'
+      image:
+        type: string
+      privacy:
+        example: public
+        type: string
+      title:
+        example: Test title
+        type: string
+    type: object
+  api.PostResponse:
+    properties:
+      comments:
+        items:
+          $ref: '#/definitions/api.Comment'
+        type: array
+      post:
+        $ref: '#/definitions/api.Post'
+    type: object
+  api.PostsListResponse:
+    properties:
+      posts:
+        items:
+          $ref: '#/definitions/api.Post'
+        type: array
+    type: object
+  api.ReactionCreateRequest:
+    properties:
+      objectId:
+        example: 1
+        type: integer
+      objectType:
+        example: post
+        type: string
+      reactionType:
+        example: like
+        type: string
+    type: object
+  api.ReactionCreateResponse:
+    properties:
+      reactionInfo:
+        $ref: '#/definitions/api.ReactionInfo'
+    type: object
+  api.ReactionInfo:
+    properties:
+      dislikeCount:
+        type: integer
+      likeCount:
+        type: integer
+      status:
+        type: string
+    type: object
+  api.RegistrationRequest:
+    properties:
+      aboutMe:
+        example: I am a software engineer
+        type: string
+      dateOfBirth:
+        example: 20.02.2002
+        type: string
+      email:
+        example: test@test.com
+        type: string
+      firstName:
+        example: John
+        type: string
+      image:
+        example: ""
+        type: string
+      lastName:
+        example: Doe
+        type: string
+      nickname:
+        example: test
+        type: string
+      password:
+        example: '!QAZ2wsx'
+        type: string
+    type: object
+  api.Response:
+    properties:
+      authenticated:
+        type: boolean
+      message:
+        type: string
+      metadata:
+        $ref: '#/definitions/api.Metadata'
+      status:
+        type: string
+      user:
+        $ref: '#/definitions/api.UserResponseInfo'
+    type: object
+  api.ResponseID:
+    properties:
+      id:
+        type: integer
+    type: object
+  api.User:
+    properties:
+      aboutMe:
+        type: string
+      avatar:
+        type: string
+      bannerColor:
+        type: string
+      commentCount:
+        type: integer
+      createdAt:
+        type: string
+      dateOfBirth:
+        type: string
+      firstName:
+        type: string
+      followerCount:
+        type: integer
+      followingCount:
+        type: integer
+      id:
+        type: integer
+      lastActive:
+        type: string
+      lastName:
+        type: string
+      nickname:
+        type: string
+      postCount:
+        type: integer
+      profileVisibility:
+        type: string
+    type: object
+  api.UserPage:
+    properties:
+      chatHash:
+        type: string
+      followStatus:
+        type: boolean
+      followers:
+        items:
+          $ref: '#/definitions/api.UserResponseInfo'
+        type: array
+      following:
+        items:
+          $ref: '#/definitions/api.UserResponseInfo'
+        type: array
+      groupsPosts:
+        items:
+          $ref: '#/definitions/api.Post'
+        type: array
+      personalPosts:
+        items:
+          $ref: '#/definitions/api.Post'
+        type: array
+      user:
+        $ref: '#/definitions/api.User'
+    type: object
+  api.UserResponseInfo:
+    properties:
+      id:
+        type: integer
+      nickname:
+        type: string
+    type: object
+  api.UsersList:
+    properties:
+      users:
+        items:
+          $ref: '#/definitions/api.User'
+        type: array
+    type: object
+  api.ValidationError:
+    properties:
+      field:
+        type: string
+      message:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample server for kood-social-network.
+  title: kood-social-network API
+  version: 0.1.0
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Logs in a user with the provided email and password.
+      parameters:
+      - description: Login credentials
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/api.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.UserResponseInfo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      summary: Log in a user
+      tags:
+      - auth
+  /auth/logout:
+    delete:
+      consumes:
+      - application/json
+      description: Logs out the currently authenticated user.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Log out a user
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Registers a new user with the provided registration details and
+        optional photo.
+      parameters:
+      - description: Registration details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/api.RegistrationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.UserResponseInfo'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      summary: Register a new user
+      tags:
+      - auth
+  /chats:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.ChatList'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      summary: Get chats
+      tags:
+      - chats
+  /comments:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new comment for a specified post
+      parameters:
+      - description: Comment Data
+        in: body
+        name: comment
+        required: true
+        schema:
+          $ref: '#/definitions/api.CommentCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.CommentCreateResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new comment on a post
+      tags:
+      - comments
+  /follow/request:
+    post:
+      consumes:
+      - application/json
+      description: Processes follow or unfollow requests based on the provided action
+        type and followee ID.
+      parameters:
+      - description: Follow or Unfollow request details
+        in: body
+        name: FollowRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.FollowRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Manage follow and unfollow actions
+      tags:
+      - follow
+  /groups:
+    get:
+      consumes:
+      - application/json
+      description: Fetches all groups.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.CommentCreateResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      summary: Get all groups
+      tags:
+      - groups
+    post:
+      consumes:
+      - application/json
+      description: Creates a new group with the provided title and description.
+      parameters:
+      - description: Group details
+        in: body
+        name: GroupCreateRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.GroupCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.ResponseID'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new group
+      tags:
+      - groups
+  /groups/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Fetches a group by its ID.
+      parameters:
+      - description: Group ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.GroupResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Get a group by ID
+      tags:
+      - groups
+  /groups/event:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new group event with the provided title, description,
+        and date.
+      parameters:
+      - description: Group event details
+        in: body
+        name: GroupEventCreateRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.GroupEventCreate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.GroupEvent'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new group event
+      tags:
+      - groups
+  /groups/request:
+    post:
+      consumes:
+      - application/json
+      description: Processes a group request, either accepting or rejecting it.
+      parameters:
+      - description: Group request details
+        in: body
+        name: GroupRequest
+        required: true
+        schema:
+          $ref: '#/definitions/api.GroupRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Process a group request
+      tags:
+      - groups
+  /notification/response:
+    post:
+      consumes:
+      - application/json
+      description: Processes the response to a notification, which could involve actions
+        such as accepting or rejecting various types of notifications.
+      parameters:
+      - description: Notification response details
+        in: body
+        name: NotificationResponse
+        required: true
+        schema:
+          $ref: '#/definitions/api.NotificationResponse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - BearerAuth: []
+      summary: Process a notification response
+      tags:
+      - notifications
+  /posts:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all public posts and those from users who have accepted
+        follow requests
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.PostsListResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      summary: Get all posts for an authenticated user
+      tags:
+      - posts
+    post:
+      consumes:
+      - application/json
+      description: Creates a new post with the provided post details and optional
+        image file.
+      parameters:
+      - description: Post details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/api.PostCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.ResponseID'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new post
+      tags:
+      - posts
+  /posts/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a post by its ID
+      parameters:
+      - description: Post ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.PostResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      summary: Get a post by ID
+      tags:
+      - posts
+  /reactions:
+    patch:
+      consumes:
+      - application/json
+      description: Allows a user to create or update a reaction (like or dislike)
+        for a specified post or comment
+      parameters:
+      - description: Reaction Data
+        in: body
+        name: reaction
+        required: true
+        schema:
+          $ref: '#/definitions/api.ReactionCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.ReactionCreateResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      security:
+      - BearerAuth: []
+      summary: Create or update a reaction (like/dislike) on a post or comment
+      tags:
+      - reactions
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.UsersList'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      summary: Get all users
+      tags:
+      - users
+  /users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                payload:
+                  $ref: '#/definitions/api.UserPage'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.Response'
+            - properties:
+                eror:
+                  $ref: '#/definitions/api.ErrorDetails'
+              type: object
+      summary: Get user by ID
+      tags:
+      - users
+swagger: "2.0"

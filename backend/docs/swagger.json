@@ -1,0 +1,2058 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server for kood-social-network.",
+        "title": "kood-social-network API",
+        "contact": {},
+        "version": "0.1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api",
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "Logs in a user with the provided email and password.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Log in a user",
+                "parameters": [
+                    {
+                        "description": "Login credentials",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.UserResponseInfo"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Logs out the currently authenticated user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Log out a user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "description": "Registers a new user with the provided registration details and optional photo.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Register a new user",
+                "parameters": [
+                    {
+                        "description": "Registration details",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.RegistrationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.UserResponseInfo"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/chats": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "chats"
+                ],
+                "summary": "Get chats",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.ChatList"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/comments": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Creates a new comment for a specified post",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "comments"
+                ],
+                "summary": "Create a new comment on a post",
+                "parameters": [
+                    {
+                        "description": "Comment Data",
+                        "name": "comment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.CommentCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.CommentCreateResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/follow/request": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Processes follow or unfollow requests based on the provided action type and followee ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "follow"
+                ],
+                "summary": "Manage follow and unfollow actions",
+                "parameters": [
+                    {
+                        "description": "Follow or Unfollow request details",
+                        "name": "FollowRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.FollowRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/groups": {
+            "get": {
+                "description": "Fetches all groups.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Get all groups",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.CommentCreateResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Creates a new group with the provided title and description.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Create a new group",
+                "parameters": [
+                    {
+                        "description": "Group details",
+                        "name": "GroupCreateRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.GroupCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.ResponseID"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/event": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Creates a new group event with the provided title, description, and date.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Create a new group event",
+                "parameters": [
+                    {
+                        "description": "Group event details",
+                        "name": "GroupEventCreateRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.GroupEventCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.GroupEvent"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/request": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Processes a group request, either accepting or rejecting it.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Process a group request",
+                "parameters": [
+                    {
+                        "description": "Group request details",
+                        "name": "GroupRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.GroupRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Fetches a group by its ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "groups"
+                ],
+                "summary": "Get a group by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Group ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.GroupResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/notification/response": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Processes the response to a notification, which could involve actions such as accepting or rejecting various types of notifications.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "notifications"
+                ],
+                "summary": "Process a notification response",
+                "parameters": [
+                    {
+                        "description": "Notification response details",
+                        "name": "NotificationResponse",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.NotificationResponse"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/posts": {
+            "get": {
+                "description": "Retrieve all public posts and those from users who have accepted follow requests",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Get all posts for an authenticated user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.PostsListResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Creates a new post with the provided post details and optional image file.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Create a new post",
+                "parameters": [
+                    {
+                        "description": "Post details",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.PostCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.ResponseID"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/{id}": {
+            "get": {
+                "description": "Retrieve a post by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Get a post by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Post ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.PostResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/reactions": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Allows a user to create or update a reaction (like or dislike) for a specified post or comment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "reactions"
+                ],
+                "summary": "Create or update a reaction (like/dislike) on a post or comment",
+                "parameters": [
+                    {
+                        "description": "Reaction Data",
+                        "name": "reaction",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.ReactionCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.ReactionCreateResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "Get all users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get all users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.UsersList"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "description": "Get user by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get user by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "payload": {
+                                            "$ref": "#/definitions/api.UserPage"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "eror": {
+                                            "$ref": "#/definitions/api.ErrorDetails"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.Chat": {
+            "type": "object",
+            "properties": {
+                "chatName": {
+                    "type": "string"
+                },
+                "chatType": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "hash": {
+                    "type": "string"
+                },
+                "lastMasegTime": {
+                    "type": "string"
+                },
+                "lastMasege": {
+                    "type": "string"
+                },
+                "lastSnder": {
+                    "$ref": "#/definitions/api.UserResponseInfo"
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.UserResponseInfo"
+                    }
+                }
+            }
+        },
+        "api.ChatList": {
+            "type": "object",
+            "properties": {
+                "groupChats": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.Chat"
+                    }
+                },
+                "individualChats": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.Chat"
+                    }
+                }
+            }
+        },
+        "api.Comment": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string",
+                    "example": "This is a comment"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "postId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "reactionInfo": {
+                    "$ref": "#/definitions/api.ReactionInfo"
+                },
+                "user": {
+                    "$ref": "#/definitions/api.UserResponseInfo"
+                }
+            }
+        },
+        "api.CommentCreateRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string",
+                    "example": "This is a comment"
+                },
+                "postId": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "api.CommentCreateResponse": {
+            "type": "object",
+            "properties": {
+                "comments": {
+                    "$ref": "#/definitions/api.Comment"
+                }
+            }
+        },
+        "api.ErrorDetails": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "details": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.ValidationError"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.FollowRequest": {
+            "type": "object",
+            "properties": {
+                "followeeId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "type": {
+                    "description": "\"follow\" or \"unfollow\"",
+                    "type": "string",
+                    "example": "follow"
+                }
+            }
+        },
+        "api.Group": {
+            "type": "object",
+            "properties": {
+                "bannerColor": {
+                    "type": "string",
+                    "example": "#000000"
+                },
+                "chatHash": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "creatorInfo": {
+                    "$ref": "#/definitions/api.UserResponseInfo"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Test description"
+                },
+                "events": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.GroupEvent"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "memberInfo": {
+                    "$ref": "#/definitions/api.MemberInfo"
+                },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.GroupMember"
+                    }
+                },
+                "posts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.Post"
+                    }
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Test title"
+                }
+            }
+        },
+        "api.GroupCreateRequest": {
+            "type": "object",
+            "properties": {
+                "bannerColor": {
+                    "type": "string",
+                    "example": "#000000"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Test description"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Test title"
+                }
+            }
+        },
+        "api.GroupEvent": {
+            "type": "object",
+            "properties": {
+                "creatorInfo": {
+                    "$ref": "#/definitions/api.UserResponseInfo"
+                },
+                "date": {
+                    "type": "string",
+                    "example": "2021-01-01T00:00:00Z"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Test description"
+                },
+                "groupId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.UserResponseInfo"
+                    }
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Test title"
+                },
+                "usersGoing": {
+                    "type": "integer"
+                }
+            }
+        },
+        "api.GroupEventCreate": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "example": "2021-01-01T00:00:00Z"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Test description"
+                },
+                "groupId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Test title"
+                }
+            }
+        },
+        "api.GroupMember": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.GroupRequest": {
+            "type": "object",
+            "properties": {
+                "groupId": {
+                    "type": "integer"
+                },
+                "requestType": {
+                    "description": "\"inv\" or \"j_req\"",
+                    "type": "string",
+                    "example": "inv"
+                }
+            }
+        },
+        "api.GroupResponse": {
+            "type": "object",
+            "properties": {
+                "group": {
+                    "$ref": "#/definitions/api.Group"
+                }
+            }
+        },
+        "api.GroupResponseInfo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.LoginRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "test@test.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "!QAZ2wsx"
+                }
+            }
+        },
+        "api.MemberInfo": {
+            "type": "object",
+            "properties": {
+                "roles": {
+                    "type": "string"
+                },
+                "totalMembers": {
+                    "type": "integer"
+                }
+            }
+        },
+        "api.Metadata": {
+            "type": "object",
+            "properties": {
+                "timestamp": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.NotificationInfo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "idRef": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.NotificationResponse": {
+            "type": "object",
+            "properties": {
+                "notification_info": {
+                    "$ref": "#/definitions/api.NotificationInfo"
+                },
+                "requestId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "status": {
+                    "description": "\"accepted\" or \"rejected\"",
+                    "type": "string",
+                    "example": "accepted"
+                }
+            }
+        },
+        "api.Post": {
+            "type": "object",
+            "properties": {
+                "commentCount": {
+                    "type": "integer"
+                },
+                "content": {
+                    "type": "string",
+                    "example": "Test content"
+                },
+                "group": {
+                    "$ref": "#/definitions/api.GroupResponseInfo"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "privacy": {
+                    "type": "string",
+                    "example": "public"
+                },
+                "reactionInfo": {
+                    "$ref": "#/definitions/api.ReactionInfo"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Test title"
+                },
+                "user": {
+                    "$ref": "#/definitions/api.UserResponseInfo"
+                }
+            }
+        },
+        "api.PostCreateRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string",
+                    "example": "Test content"
+                },
+                "group": {
+                    "$ref": "#/definitions/api.GroupResponseInfo"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "privacy": {
+                    "type": "string",
+                    "example": "public"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Test title"
+                }
+            }
+        },
+        "api.PostResponse": {
+            "type": "object",
+            "properties": {
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.Comment"
+                    }
+                },
+                "post": {
+                    "$ref": "#/definitions/api.Post"
+                }
+            }
+        },
+        "api.PostsListResponse": {
+            "type": "object",
+            "properties": {
+                "posts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.Post"
+                    }
+                }
+            }
+        },
+        "api.ReactionCreateRequest": {
+            "type": "object",
+            "properties": {
+                "objectId": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "objectType": {
+                    "type": "string",
+                    "example": "post"
+                },
+                "reactionType": {
+                    "type": "string",
+                    "example": "like"
+                }
+            }
+        },
+        "api.ReactionCreateResponse": {
+            "type": "object",
+            "properties": {
+                "reactionInfo": {
+                    "$ref": "#/definitions/api.ReactionInfo"
+                }
+            }
+        },
+        "api.ReactionInfo": {
+            "type": "object",
+            "properties": {
+                "dislikeCount": {
+                    "type": "integer"
+                },
+                "likeCount": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.RegistrationRequest": {
+            "type": "object",
+            "properties": {
+                "aboutMe": {
+                    "type": "string",
+                    "example": "I am a software engineer"
+                },
+                "dateOfBirth": {
+                    "type": "string",
+                    "example": "20.02.2002"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "test@test.com"
+                },
+                "firstName": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "image": {
+                    "type": "string",
+                    "example": ""
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "nickname": {
+                    "type": "string",
+                    "example": "test"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "!QAZ2wsx"
+                }
+            }
+        },
+        "api.Response": {
+            "type": "object",
+            "properties": {
+                "authenticated": {
+                    "type": "boolean"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/api.Metadata"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/api.UserResponseInfo"
+                }
+            }
+        },
+        "api.ResponseID": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "api.User": {
+            "type": "object",
+            "properties": {
+                "aboutMe": {
+                    "type": "string"
+                },
+                "avatar": {
+                    "type": "string"
+                },
+                "bannerColor": {
+                    "type": "string"
+                },
+                "commentCount": {
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "dateOfBirth": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "followerCount": {
+                    "type": "integer"
+                },
+                "followingCount": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lastActive": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "postCount": {
+                    "type": "integer"
+                },
+                "profileVisibility": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.UserPage": {
+            "type": "object",
+            "properties": {
+                "chatHash": {
+                    "type": "string"
+                },
+                "followStatus": {
+                    "type": "boolean"
+                },
+                "followers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.UserResponseInfo"
+                    }
+                },
+                "following": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.UserResponseInfo"
+                    }
+                },
+                "groupsPosts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.Post"
+                    }
+                },
+                "personalPosts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.Post"
+                    }
+                },
+                "user": {
+                    "$ref": "#/definitions/api.User"
+                }
+            }
+        },
+        "api.UserResponseInfo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.UsersList": {
+            "type": "object",
+            "properties": {
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/api.User"
+                    }
+                }
+            }
+        },
+        "api.ValidationError": {
+            "type": "object",
+            "properties": {
+                "field": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
